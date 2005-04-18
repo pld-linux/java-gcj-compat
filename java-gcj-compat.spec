@@ -1,4 +1,5 @@
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
+Summary(pl):	Skryptty pow³oki i dowi±zania do symulacji ¶rodowiska Javy przy u¿yciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.28
 Release:	1
@@ -18,6 +19,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 A collection of wrapper scripts, symlinks and jar files. It is meant
 to provide an SDK-like interface to the GCJ tool set.
 
+%description -l pl
+Zestaw skryptów obudowuj±cych, dowi±zañ symbolicznych i plików jar,
+maj±cy na celu dostarczenie podobnego do SDK interfejsu do zestawu
+narzêdzi GCJ.
+
 %prep
 %setup -q
 
@@ -35,6 +41,7 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
