@@ -1,7 +1,7 @@
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
 Name:		java-gcj-compat
 Version:	1.0.28
-Release:	0.1
+Release:	1
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -22,6 +22,12 @@ to provide an SDK-like interface to the GCJ tool set.
 %setup -q
 
 %build
+cat <<EOF >javac.in
+#!/bin/sh
+export CLASSPATH=\$CLASSPATH
+exec %{_bindir}/gcj -O2 -C \$@
+EOF
+
 %configure \
 	--with-jvm-root-dir=%{_libdir}/java
 
