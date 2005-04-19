@@ -13,7 +13,6 @@ Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	37aafffb0d017608c4d850f4bd5c64b5
 BuildRequires:	gcc-java >= 5:4.0.0
 BuildRequires:	rpmbuild(macros) >= 1.153
-BuildRequires:	sed >= 4.0
 Requires:	libgcj >= 5:4.0.0-0.20050416.2
 Provides:	jre
 Obsoletes:	java-sun-jre
@@ -87,6 +86,7 @@ for f in jaas jdbc-stdext jce jndi jndi-cos jndi-ldap jndi-ldap jndi-rmi jta rt;
 done
 
 #symlink to jni.h
+#gnucrypto: jce.jar
 #jessie: {jcert,jnet,jsse}.jar -> jre/lib/jsse.jar
 
 %clean
