@@ -13,12 +13,12 @@ Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	37aafffb0d017608c4d850f4bd5c64b5
 BuildRequires:	gcc-java >= 5:4.0.0
 BuildRequires:	rpmbuild(macros) >= 1.153
-Requires:	gcc-java >= 5:4.0.0
-Requires:	gjdoc
+BuildRequires:	sed >= 4.0
 Requires:	libgcj >= 5:4.0.0-0.20050416.2
 Provides:	jre
-Obsoletes:	jdkgcj
 Obsoletes:	java-sun-jre
+Obsoletes:	java-sun-jre-jdbc
+Obsoletes:	jdkgcj
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
@@ -39,9 +39,11 @@ Summary(pl):	Skryptty pow³oki i dowi±zania do symulacji ¶rodowiska programistycz
 Group:		Development/Languages/Java
 Requires:	ecj
 Requires:	gcc-java >= 5:4.0.0-0.20050416.2
+Requires:	gjdoc
 Requires:	java-gcj-compat
 Provides:	jdk
 Obsoletes:	java-sun
+Obsoletes:	java-sun-tools
 
 %description devel
 A collection of wrapper scripts, symlinks and jar files. It is meant
@@ -74,23 +76,18 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_javadir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#jaas.jar -> /usr/lib/java/jre/lib/rt.jar
-#javaws.jar -> /usr/lib/java/jre/lib/javaws.jar
-#jaxp_parser_impl.jar -> xercesImpl.jar
-#jce.jar -> /usr/lib/java/jre/lib/jce.jar
-#jcert.jar -> /usr/lib/java/jre/lib/jsse.jar
-#jdbc-stdext-3.0.jar -> /usr/lib/java/jre/lib/rt.jar
-#jdbc-stdext.jar -> /usr/lib/java/jre/lib/rt.jar
-#jndi-cos.jar -> /usr/lib/java/jre/lib/rt.jar
-#jndi.jar -> /usr/lib/java/jre/lib/rt.jar
-#jndi-ldap.jar -> /usr/lib/java/jre/lib/rt.jar
-#jndi-rmi.jar -> /usr/lib/java/jre/lib/rt.jar
-#jnet.jar -> /usr/lib/java/jre/lib/jsse.jar
-#jsse.jar -> /usr/lib/java/jre/lib/jsse.jar
+for f in jaas jdbc-stdext jce jndi jndi-cos jndi-ldap jndi-ldap jndi-rmi jta rt; do
+	ln -sf %{_javadir}/libgcj.jar $RPM_BUILD_ROOT%{_jvmdir}/jre/lib/$f.jar
+	cp -d $RPM_BUILD_ROOT{%{_jvmdir}/jre/lib/$f.jar,%{_javadir}}
+done
+
+#symlink to jni.h
+#jessie: {jcert,jnet,jsse}.jar -> jre/lib/jsse.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -100,9 +97,27 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/aot-compile
 %attr(755,root,root) %{_bindir}/find-and-aot-compile
-%attr(755,root,root) %{_bindir}/rebuild-gcj-db
+%attr(754,root,root) %{_bindir}/rebuild-gcj-db
 %dir %{_jvmdir}
 %dir %{_jvmdir}/bin
+%attr(755,root,root) %{_jvmdir}/bin/java
+%attr(755,root,root) %{_jvmdir}/bin/rmiregistry
 %dir %{_jvmdir}/jre
 %dir %{_jvmdir}/jre/bin
+%attr(755,root,root) %{_jvmdir}/jre/bin/java
+%attr(755,root,root) %{_jvmdir}/jre/bin/rmiregistry
+%dir %{_jvmdir}/jre/lib
+%dir %{_jvmdir}/jre/lib/%{_target_base_arch}
+%{_jvmdir}/jre/lib/*.jar
 %dir %{_jvmdir}/lib
+%{_javadir}/*.jar
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_jvmdir}/bin/jar
+%attr(755,root,root) %{_jvmdir}/bin/javac
+%attr(755,root,root) %{_jvmdir}/bin/javadoc
+%attr(755,root,root) %{_jvmdir}/bin/javah
+%attr(755,root,root) %{_jvmdir}/bin/rmic
+%dir %{_jvmdir}/include
+%dir %{_jvmdir}/include/linux
