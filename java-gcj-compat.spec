@@ -3,7 +3,7 @@
 #		- requires+symlinks for gnu-crypto and jessie packages.
 #
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
-Summary(pl):	Skryptty pow這ki i dowi您ania do symulacji 鈔odowiska uruchomieniowego Javy przy u篡ciu GCJ
+Summary(pl):	Skrypty pow這ki i dowi您ania do symulacji 鈔odowiska uruchomieniowego Javy przy u篡ciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.28
 Release:	1.1
@@ -34,7 +34,7 @@ narz璠zi GCJ.
 
 %package devel
 Summary:	Shell scripts and symbolic links to simulate Java development enviroment with GCJ
-Summary(pl):	Skryptty pow這ki i dowi您ania do symulacji 鈔odowiska programistycznego Javy przy u篡ciu GCJ
+Summary(pl):	Skrypty pow這ki i dowi您ania do symulacji 鈔odowiska programistycznego Javy przy u篡ciu GCJ
 Group:		Development/Languages/Java
 Requires:	ecj
 Requires:	gcc-java >= 5:4.0.0-0.20050416.2
