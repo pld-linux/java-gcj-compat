@@ -3,7 +3,7 @@
 #		- requires+symlinks for gnu-crypto and jessie packages.
 #
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
-Summary(pl):	Skrypty pow³oki i dowi±zania do symulacji ¶rodowiska uruchomieniowego Javy przy u¿yciu GCJ
+Summary(pl.UTF-8):   Skrypty powÅ‚oki i dowiÄ…zania do symulacji Å›rodowiska uruchomieniowego Javy przy uÅ¼yciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.28
 Release:	1.2
@@ -30,14 +30,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 A collection of wrapper scripts, symlinks and jar files. It is meant
 to provide an JRE-like interface to the GCJ tool set.
 
-%description -l pl
-Zestaw skryptów obudowuj±cych, dowi±zañ symbolicznych i plików jar,
-maj±cy na celu dostarczenie podobnego do JRE interfejsu do zestawu
-narzêdzi GCJ.
+%description -l pl.UTF-8
+Zestaw skryptÃ³w obudowujÄ…cych, dowiÄ…zaÅ„ symbolicznych i plikÃ³w jar,
+majÄ…cy na celu dostarczenie podobnego do JRE interfejsu do zestawu
+narzÄ™dzi GCJ.
 
 %package devel
 Summary:	Shell scripts and symbolic links to simulate Java development enviroment with GCJ
-Summary(pl):	Skrypty pow³oki i dowi±zania do symulacji ¶rodowiska programistycznego Javy przy u¿yciu GCJ
+Summary(pl.UTF-8):   Skrypty powÅ‚oki i dowiÄ…zania do symulacji Å›rodowiska programistycznego Javy przy uÅ¼yciu GCJ
 Group:		Development/Languages/Java
 Requires:	ecj
 Requires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
@@ -51,10 +51,10 @@ Obsoletes:	java-sun-tools
 A collection of wrapper scripts, symlinks and jar files. It is meant
 to provide an JDK-like interface to the GCJ tool set.
 
-%description devel -l pl
-Zestaw skryptów obudowuj±cych, dowi±zañ symbolicznych i plików jar,
-maj±cy na celu dostarczenie podobnego do JDK interfejsu do zestawu
-narzêdzi GCJ.
+%description devel -l pl.UTF-8
+Zestaw skryptÃ³w obudowujÄ…cych, dowiÄ…zaÅ„ symbolicznych i plikÃ³w jar,
+majÄ…cy na celu dostarczenie podobnego do JDK interfejsu do zestawu
+narzÄ™dzi GCJ.
 
 %prep
 %setup -q
