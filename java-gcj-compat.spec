@@ -36,7 +36,7 @@ mający na celu dostarczenie podobnego do JRE interfejsu do zestawu
 narzędzi GCJ.
 
 %package devel
-Summary:	Shell scripts and symbolic links to simulate Java development enviroment with GCJ
+Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
 Requires:	ecj
