@@ -15,7 +15,7 @@ Patch0:		%{name}-javac.patch
 # gcc >= 6:4.3.1-3 is required for working ecj1.
 %define		_gcc_ver	6:4.3.1-3
 BuildRequires:	gcc-java >= %{_gcc_ver}
-BuildRequires:	rpmbuild(macros) >= 1.153
+BuildRequires:	rpmbuild(macros) >= 1.453
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
@@ -25,7 +25,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
 %define		_jvmdir		%{_jvmroot}/java-1.5.0-gcj-1.5.0.0
-%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%(%{__cc} -dumpversion)/include
+%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{cc_version}/include
 
 %description
 A collection of wrapper scripts, symlinks and jar files. It is meant
