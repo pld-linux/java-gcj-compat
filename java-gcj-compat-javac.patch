@@ -1,0 +1,20 @@
+--- java-gcj-compat-1.0.78/Makefile.in.orig	2008-07-28 14:40:25.000000000 +0200
++++ java-gcj-compat-1.0.78/Makefile.in	2008-07-28 14:47:03.000000000 +0200
+@@ -486,7 +486,6 @@
+ 	ln -sf ../../../../bin/sinjdoc $(DESTDIR)$(SDK_BIN_DIR)/javadoc
+ 	ln -sf ../../../../bin/grmic$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/rmic
+ 	ln -sf ../../../../bin/gjavah$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/javah
+-	ln -sf ../../../../bin/ecj $(DESTDIR)$(SDK_BIN_DIR)/javac
+ 	ln -sf ../../../../bin/gappletviewer $(DESTDIR)$(SDK_BIN_DIR)/appletviewer
+ 	ln -sf ../../../../bin/gjarsigner $(DESTDIR)$(SDK_BIN_DIR)/jarsigner
+ 	ln -sf ../../../../bin/grmiregistry$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/rmiregistry
+--- java-gcj-compat-1.0.78/Makefile.am.orig	2008-07-28 14:40:25.000000000 +0200
++++ java-gcj-compat-1.0.78/Makefile.am	2008-07-28 14:47:16.000000000 +0200
+@@ -21,7 +21,6 @@
+ 	ln -sf ../../../../bin/sinjdoc $(DESTDIR)$(SDK_BIN_DIR)/javadoc
+ 	ln -sf ../../../../bin/grmic$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/rmic
+ 	ln -sf ../../../../bin/gjavah$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/javah
+-	ln -sf ../../../../bin/ecj $(DESTDIR)$(SDK_BIN_DIR)/javac
+ 	ln -sf ../../../../bin/gappletviewer $(DESTDIR)$(SDK_BIN_DIR)/appletviewer
+ 	ln -sf ../../../../bin/gjarsigner $(DESTDIR)$(SDK_BIN_DIR)/jarsigner
+ 	ln -sf ../../../../bin/grmiregistry$(gcc_suffix) $(DESTDIR)$(SDK_BIN_DIR)/rmiregistry
