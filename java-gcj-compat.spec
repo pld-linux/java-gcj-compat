@@ -6,25 +6,27 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	0.1
+Release:	0.2
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
 %define		_gcc_ver	4.0.0
+%define		_libgcj_ver	%(rpm -q libgcj-devel --queryformat "%{VERSION}" 2> /dev/null || exit 1)
 %define		_gcc_rel	3
+
 BuildRequires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
 BuildRequires:	rpmbuild(macros) >= 1.153
-Requires:	libgcj >= 5:%{_gcc_ver}-%{_gcc_rel}
-Provides:	jre
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
+Provides:	jre
+Requires:	libgcj >= 5:%{_gcc_ver}-%{_gcc_rel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
 %define		_jvmdir		%{_jvmroot}/java-1.5.0-gcj-1.5.0.0
-%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{_gcc_ver}/include
+%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{_libgcj_ver}/include
 
 %description
 A collection of wrapper scripts, symlinks and jar files. It is meant
@@ -39,11 +41,11 @@ narzędzi GCJ.
 Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
-Requires:	ecj
+Provides:	jdk
 Requires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
 Requires:	gjdoc
 Requires:	java-gcj-compat
-Provides:	jdk
+Requires:	libgcj-devel >= 5:%{_gcc_ver}-%{_gcc_rel}
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
 
@@ -76,8 +78,13 @@ Moduły języka Python dla java-gcj-compat.
 cat <<EOF >javac.in
 #!/bin/sh
 export CLASSPATH=\$CLASSPATH\${CLASSPATH:+:}%{_javadir}/libgcj.jar
-exec %{_bindir}/ecj \$@
+exec %{_bindir}/gcj \$@
 EOF
+
+%{__sed} -i 's/sinjdoc/gjdoc/g' Makefile.*
+%{__sed} -i 's/fastjar/gjar/g' Makefile.*
+%{__sed} -i 's/ecj/gcj/g' Makefile.*
+
 
 %configure \
 	--disable-symlinks \
