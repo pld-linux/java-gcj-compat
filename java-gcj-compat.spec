@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	0.2
+Release:	0.3
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -87,7 +87,6 @@ EOF
 
 
 %configure \
-	--disable-symlinks \
 	--with-arch-directory=%{_target_base_arch} \
 	--with-os-directory=linux \
 	--with-jvm-root-dir=%{_jvmroot} \
@@ -127,6 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(754,root,root) %{_bindir}/rebuild-gcj-db
 %dir %{_jvmdir}
 %dir %{_jvmdir}/bin
+%attr(755,root,root) %{_bindir}/java
+%attr(755,root,root) %{_bindir}/keytool
+%attr(755,root,root) %{_bindir}/rmiregistry
 %attr(755,root,root) %{_jvmdir}/bin/java
 %attr(755,root,root) %{_jvmdir}/bin/keytool
 %attr(755,root,root) %{_jvmdir}/bin/rmiregistry
@@ -142,6 +144,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/appletviewer
+%attr(755,root,root) %{_bindir}/jar
+%attr(755,root,root) %{_bindir}/jarsigner
+%attr(755,root,root) %{_bindir}/javac
+%attr(755,root,root) %{_bindir}/javadoc
+%attr(755,root,root) %{_bindir}/javah
+%attr(755,root,root) %{_bindir}/rmic
 %attr(755,root,root) %{_jvmdir}/bin/appletviewer
 %attr(755,root,root) %{_jvmdir}/bin/jar
 %attr(755,root,root) %{_jvmdir}/bin/jarsigner
