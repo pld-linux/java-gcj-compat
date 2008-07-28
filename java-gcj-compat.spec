@@ -5,12 +5,12 @@
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
-Version:	1.0.28
-Release:	1.2
+Version:	1.0.78
+Release:	0.1
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
-# Source0-md5:	37aafffb0d017608c4d850f4bd5c64b5
+# Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
 %define		_gcc_ver	4.0.0
 %define		_gcc_rel	3
 BuildRequires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
@@ -23,7 +23,7 @@ Obsoletes:	jdkgcj
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
-%define		_jvmdir		%{_jvmroot}/java-1.4.2-gcj-1.4.2.0
+%define		_jvmdir		%{_jvmroot}/java-1.5.0-gcj-1.5.0.0
 %define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{_gcc_ver}/include
 
 %description
@@ -55,6 +55,19 @@ to provide an JDK-like interface to the GCJ tool set.
 Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
 mający na celu dostarczenie podobnego do JDK interfejsu do zestawu
 narzędzi GCJ.
+
+%package -n python-java-gcj-compat
+Summary:        Python modules for java-gcj-compat
+Summary(pl.UTF-8):      Moduły języka Python dla java-gcj-compat
+Group:          Libraries/Python
+Requires:       %{name}-libs = %{version}-%{release}
+%pyrequires_eq  python-libs
+
+%description -n python-java-gcj-compat
+Python modules for java-gcj-compat.
+
+%description -n python-java-gcj-compat -l pl.UTF-8
+Moduły języka Python dla java-gcj-compat.
 
 %prep
 %setup -q
@@ -103,25 +116,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/aot-compile
-%attr(755,root,root) %{_bindir}/find-and-aot-compile
+%attr(755,root,root) %{_bindir}/aot-compile-rpm
 %attr(754,root,root) %{_bindir}/rebuild-gcj-db
 %dir %{_jvmdir}
 %dir %{_jvmdir}/bin
 %attr(755,root,root) %{_jvmdir}/bin/java
+%attr(755,root,root) %{_jvmdir}/bin/keytool
 %attr(755,root,root) %{_jvmdir}/bin/rmiregistry
 %dir %{_jvmdir}/jre
 %dir %{_jvmdir}/jre/bin
 %attr(755,root,root) %{_jvmdir}/jre/bin/java
+%attr(755,root,root) %{_jvmdir}/jre/bin/keytool
 %attr(755,root,root) %{_jvmdir}/jre/bin/rmiregistry
 %dir %{_jvmdir}/jre/lib
 %dir %{_jvmdir}/jre/lib/%{_target_base_arch}
 %{_jvmdir}/jre/lib/*.jar
-%dir %{_jvmdir}/lib
 %{_javadir}/*.jar
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_jvmdir}/bin/appletviewer
 %attr(755,root,root) %{_jvmdir}/bin/jar
+%attr(755,root,root) %{_jvmdir}/bin/jarsigner
 %attr(755,root,root) %{_jvmdir}/bin/javac
 %attr(755,root,root) %{_jvmdir}/bin/javadoc
 %attr(755,root,root) %{_jvmdir}/bin/javah
@@ -130,3 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_jvmdir}/include/*.h
 %dir %{_jvmdir}/include/linux
 %{_jvmdir}/include/linux/*.h
+
+%files -n python-java-gcj-compat
+%defattr(644,root,root,755)
+%{py_sitescriptdir}/*.py[co]
