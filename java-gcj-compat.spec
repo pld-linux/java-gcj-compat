@@ -11,22 +11,21 @@ License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
-%define		_gcc_ver	4.0.0
-%define		_libgcj_ver	%(rpm -q libgcj-devel --queryformat "%{VERSION}" 2> /dev/null || exit 1)
-%define		_gcc_rel	3
-
-BuildRequires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
+Patch0:		%{name}-javac.patch
+# gcc >= 6:4.3.1-3 is required for working ecj1.
+%define		_gcc_ver	6:4.3.1-3
+BuildRequires:	gcc-java >= %{_gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.153
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
 Provides:	jre
-Requires:	libgcj >= 5:%{_gcc_ver}-%{_gcc_rel}
+Requires:	libgcj >= %{_gcc_ver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
 %define		_jvmdir		%{_jvmroot}/java-1.5.0-gcj-1.5.0.0
-%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{_libgcj_ver}/include
+%define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%(%{__cc} -dumpversion)/include
 
 %description
 A collection of wrapper scripts, symlinks and jar files. It is meant
@@ -42,10 +41,10 @@ Summary:	Shell scripts and symbolic links to simulate Java development environme
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
 Provides:	jdk
-Requires:	gcc-java >= 5:%{_gcc_ver}-%{_gcc_rel}
+Requires:	gcc-java >= %{_gcc_ver}
 Requires:	gjdoc
 Requires:	java-gcj-compat
-Requires:	libgcj-devel >= 5:%{_gcc_ver}-%{_gcc_rel}
+Requires:	libgcj-devel >= %{_gcc_ver}
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
 
@@ -73,18 +72,12 @@ Moduły języka Python dla java-gcj-compat.
 
 %prep
 %setup -q
-
-%build
-cat <<EOF >javac.in
-#!/bin/sh
-export CLASSPATH=\$CLASSPATH\${CLASSPATH:+:}%{_javadir}/libgcj.jar
-exec %{_bindir}/gcj \$@
-EOF
-
+%patch0 -p1
 %{__sed} -i 's/sinjdoc/gjdoc/g' Makefile.*
 %{__sed} -i 's/fastjar/gjar/g' Makefile.*
 %{__sed} -i 's/ecj/gcj/g' Makefile.*
 
+%build
 
 %configure \
 	--with-arch-directory=%{_target_base_arch} \
@@ -101,6 +94,11 @@ install -d $RPM_BUILD_ROOT%{_javadir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+cat <<EOF >$RPM_BUILD_ROOT%{_jvmdir}/bin/javac
+#!/bin/sh
+exec %{_bindir}/gij -jar %{_javadir}/ecj.jar \$@
+EOF
 
 for f in jaas jdbc-stdext jce jndi jndi-cos jndi-ldap jndi-ldap jndi-rmi jta rt; do
 	ln -sf %{_javadir}/libgcj.jar $RPM_BUILD_ROOT%{_jvmdir}/jre/lib/$f.jar
