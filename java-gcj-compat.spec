@@ -95,9 +95,9 @@ install -d $RPM_BUILD_ROOT%{_javadir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cat <<EOF >$RPM_BUILD_ROOT%{_jvmdir}/bin/javac
+cat <<'EOF' >$RPM_BUILD_ROOT%{_jvmdir}/bin/javac
 #!/bin/sh
-exec %{_bindir}/gij -jar %{_javadir}/ecj.jar \$@
+exec %{_bindir}/gij -jar %{_javadir}/ecj.jar ${1:+"$@"}
 EOF
 
 for f in jaas jdbc-stdext jce jndi jndi-cos jndi-ldap jndi-ldap jndi-rmi jta rt; do
