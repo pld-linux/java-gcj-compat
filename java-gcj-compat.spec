@@ -13,10 +13,10 @@ Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
 Patch0:		%{name}-javac.patch
 # gcc >= 6:4.3.1-3 is required for working ecj1.
-%define		_gcc_ver	6:4.3.1-3
-BuildRequires:	gcc-java >= %{_gcc_ver}
+%define		gcc_ver	6:4.3.1-3
+BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
-Requires:	libgcj >= %{_gcc_ver}
+Requires:	libgcj >= %{gcc_ver}
 Provides:	jre
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
@@ -40,10 +40,10 @@ narzędzi GCJ.
 Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
-Requires:	gcc-java >= %{_gcc_ver}
+Requires:	gcc-java >= %{gcc_ver}
 Requires:	gjdoc
 Requires:	java-gcj-compat
-Requires:	libgcj-devel >= %{_gcc_ver}
+Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jdk
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
