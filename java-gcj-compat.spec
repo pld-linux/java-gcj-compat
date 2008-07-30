@@ -16,11 +16,11 @@ Patch0:		%{name}-javac.patch
 %define		_gcc_ver	6:4.3.1-3
 BuildRequires:	gcc-java >= %{_gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
+Requires:	libgcj >= %{_gcc_ver}
+Provides:	jre
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
-Provides:	jre
-Requires:	libgcj >= %{_gcc_ver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
@@ -40,11 +40,11 @@ narzędzi GCJ.
 Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
-Provides:	jdk
 Requires:	gcc-java >= %{_gcc_ver}
 Requires:	gjdoc
 Requires:	java-gcj-compat
 Requires:	libgcj-devel >= %{_gcc_ver}
+Provides:	jdk
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
 
