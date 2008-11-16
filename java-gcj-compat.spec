@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	0.3
+Release:	0.4
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -61,7 +61,7 @@ narzędzi GCJ.
 Summary:        Python modules for java-gcj-compat
 Summary(pl.UTF-8):      Moduły języka Python dla java-gcj-compat
 Group:          Libraries/Python
-Requires:       %{name}-libs = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 %pyrequires_eq  python-libs
 
 %description -n python-java-gcj-compat
