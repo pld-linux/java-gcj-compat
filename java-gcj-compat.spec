@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -17,7 +17,7 @@ Patch0:		%{name}-javac.patch
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
 Requires:	libgcj >= %{gcc_ver}
-Provides:	jre
+Provides:	jre = 1.5
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
@@ -45,7 +45,7 @@ Requires:	gjdoc
 Requires:	java-gcj-compat
 Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jar
-Provides:	jdk
+Provides:	jdk = 1.5
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
 
