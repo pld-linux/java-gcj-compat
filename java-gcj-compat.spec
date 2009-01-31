@@ -17,6 +17,7 @@ Patch0:		%{name}-javac.patch
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
 Requires:	libgcj >= %{gcc_ver}
+Provides:	java
 Provides:	jre = 1.5
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
@@ -42,7 +43,7 @@ Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska progr
 Group:		Development/Languages/Java
 Requires:	gcc-java >= %{gcc_ver}
 Requires:	gjdoc
-Requires:	java-gcj-compat
+Requires:	java-gcj-compat = %{name}-%{version}
 Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jar
 Provides:	jdk = 1.5
