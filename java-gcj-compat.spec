@@ -43,7 +43,7 @@ Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska progr
 Group:		Development/Languages/Java
 Requires:	gcc-java >= %{gcc_ver}
 Requires:	gjdoc
-Requires:	java-gcj-compat = %{name}-%{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jar
 Provides:	java-jre-tools
