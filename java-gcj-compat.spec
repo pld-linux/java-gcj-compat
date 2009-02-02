@@ -46,6 +46,7 @@ Requires:	gjdoc
 Requires:	java-gcj-compat = %{name}-%{version}
 Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jar
+Provides:	java-jre-tools
 Provides:	jdk = 1.5
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
