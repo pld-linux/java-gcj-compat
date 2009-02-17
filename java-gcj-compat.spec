@@ -18,6 +18,7 @@ BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
 Requires:	libgcj >= %{gcc_ver}
 Provides:	java
+Provides:	jce
 Provides:	jre = 1.5
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
