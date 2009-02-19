@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -23,6 +23,8 @@ Provides:	jre = 1.5
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
 Obsoletes:	jdkgcj
+Conflicts:	java-sun
+Conflicts:	java-sun-jre-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_jvmroot	%{_libdir}/java
@@ -42,15 +44,17 @@ narzędzi GCJ.
 Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
+Requires:	%{name} = %{version}-%{release}
 Requires:	gcc-java >= %{gcc_ver}
 Requires:	gjdoc
-Requires:	%{name} = %{version}-%{release}
 Requires:	libgcj-devel >= %{gcc_ver}
 Provides:	jar
 Provides:	java-jre-tools
 Provides:	jdk = 1.5
 Obsoletes:	java-sun
 Obsoletes:	java-sun-tools
+Conflicts:	java-sun-jre
+Conflicts:	java-sun-jre-X11
 
 %description devel
 A collection of wrapper scripts, symlinks and jar files. It is meant
