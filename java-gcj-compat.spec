@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	5
+Release:	6
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ Patch0:		%{name}-javac.patch
 %define		gcc_ver	6:4.3.1-3
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	rpmbuild(macros) >= 1.453
+Requires:	java-gnu-classpath
 Requires:	libgcj >= %{gcc_ver}
 Provides:	java
 Provides:	jce = 1.5
@@ -121,6 +122,10 @@ ln -sf %{_gccinc}/jvmpi.h	$RPM_BUILD_ROOT%{_jvmdir}/include/jvmpi.h
 #gnucrypto: jce.jar
 #jessie: {jcert,jnet,jsse}.jar -> jre/lib/jsse.jar
 
+#gnu-classpath classes
+install -d $RPM_BUILD_ROOT%{_jvmdir}/lib
+ln -sf %{_javadir}/tools.jar $RPM_BUILD_ROOT%{_jvmdir}/lib/tools.jar
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -164,6 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_jvmdir}/bin/javadoc
 %attr(755,root,root) %{_jvmdir}/bin/javah
 %attr(755,root,root) %{_jvmdir}/bin/rmic
+%attr(755,root,root) %{_jvmdir}/lib/tools.jar
 %dir %{_jvmdir}/include
 %{_jvmdir}/include/*.h
 %dir %{_jvmdir}/include/linux
