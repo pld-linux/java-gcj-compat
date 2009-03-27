@@ -6,7 +6,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	6
+Release:	7
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -137,6 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(754,root,root) %{_bindir}/rebuild-gcj-db
 %dir %{_jvmdir}
 %dir %{_jvmdir}/bin
+%dir %{_jvmdir}/lib
 %attr(755,root,root) %{_bindir}/java
 %attr(755,root,root) %{_bindir}/keytool
 %attr(755,root,root) %{_bindir}/rmiregistry
