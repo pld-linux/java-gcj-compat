@@ -15,6 +15,7 @@ Patch0:		%{name}-javac.patch
 # gcc >= 6:4.3.1-3 is required for working ecj1.
 %define		gcc_ver	6:4.3.1-3
 BuildRequires:	gcc-java >= %{gcc_ver}
+BuildRequires:	python-devel
 BuildRequires:	rpmbuild(macros) >= 1.453
 Requires:	java-gnu-classpath
 Requires:	libgcj >= %{gcc_ver}
