@@ -6,14 +6,15 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.78
-Release:	7
+Release:	8
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
 Patch0:		%{name}-javac.patch
 # gcc >= 6:4.3.1-3 is required for working ecj1.
-%define		gcc_ver	6:4.3.1-3
+# gcc >= 6:4.4.0 is required because of aot-compile and rebuild-gcj-db scripts
+%define		gcc_ver	6:4.4.0
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	python-devel
 BuildRequires:	rpmbuild(macros) >= 1.453
@@ -133,9 +134,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_bindir}/aot-compile
-%attr(755,root,root) %{_bindir}/aot-compile-rpm
-%attr(754,root,root) %{_bindir}/rebuild-gcj-db
 %dir %{_jvmdir}
 %dir %{_jvmdir}/bin
 %dir %{_jvmdir}/lib
