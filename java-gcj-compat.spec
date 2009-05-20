@@ -1,7 +1,3 @@
-#
-# TODO:
-#		- requires+symlinks for gnu-crypto and jessie packages.
-#
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat

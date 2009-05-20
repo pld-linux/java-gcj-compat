@@ -1,0 +1,27 @@
+TODO:
+- requires+symlinks for gnu-crypto and jessie packages.
+- java-sun -> gcj switch is broken on builders:
+poldek: There are 3 packages to install (1 marked by dependencies), 3 to remove:
+poldek: I java-gcj-compat-devel-1.0.78-8.i686, java-hamcrest-1.1-1.noarch
+poldek: D java-gcj-compat-1.0.78-8.i686
+poldek: R java-sun-1.6.0.13-1.i686, java-sun-jre-1.6.0.13-1.i686,
+poldek: R java-sun-tools-1.6.0.13-1.i686
+poldek: Need to get 233.5KB of archives. After unpacking 247.3KB will be used.
+poldek: error: 7 unresolved dependencies, 2 conflicts
+poldek: Executing rpm --upgrade -vh --test --root /...
+poldek: error: Failed dependencies:
+poldek:         java-sun-jre-X11 conflicts with java-gcj-compat-1.0.78-8.i686
+poldek:         java-sun-jre-X11 conflicts with java-gcj-compat-devel-1.0.78-8.i686
+poldek:         java(ClassDataVersion) >= 50.0 is needed by java-hamcrest-1.1-1.noarch
+poldek:         java(ClassDataVersion) >= 50.0 is needed by (installed) java-xalan-2.7.1-2.noarch
+poldek:         libawt.so is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+poldek:         libjava.so is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+poldek:         libjli.so is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+poldek:         libjli.so(SUNWprivate_1.1) is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+poldek:         libjvm.so(SUNWprivate_1.1) is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+poldek:         java-sun-jre = 1.6.0.13-1 is needed by (installed) java-sun-jre-X11-1.6.0.13-1.i686
+uninstalling conflicting packages
+removing java-sun-jre-X11 java-xalan java-gcj-compat java-gcj-compat-devel java-hamcrest
+error: java-gcj-compat: no such package
+error: java-gcj-compat-devel: no such package
+error: java-hamcrest: no such package
