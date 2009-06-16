@@ -1,3 +1,11 @@
+# NOTE:
+# - homepage says this pkg is EOL, we should catch up
+# TODO:
+# - can we provide java-sun-jre-X11 for GUI apps?
+
+# gcc >= 6:4.3.1-3 is required for working ecj1.
+# gcc >= 6:4.4.0 is required because of aot-compile and rebuild-gcj-db scripts
+%define		gcc_ver	6:4.4.0
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
@@ -8,9 +16,7 @@ Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
 # Source0-md5:	03d8e7e4a52608878600cd16f5c8454a
 Patch0:		%{name}-javac.patch
-# gcc >= 6:4.3.1-3 is required for working ecj1.
-# gcc >= 6:4.4.0 is required because of aot-compile and rebuild-gcj-db scripts
-%define		gcc_ver	6:4.4.0
+URL:		http://sources.redhat.com/rhug/java-gcj-compat.html
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	python-devel
 BuildRequires:	rpmbuild(macros) >= 1.453
@@ -122,7 +128,7 @@ ln -sf %{_gccinc}/jvmpi.h	$RPM_BUILD_ROOT%{_jvmdir}/include/jvmpi.h
 #gnucrypto: jce.jar
 #jessie: {jcert,jnet,jsse}.jar -> jre/lib/jsse.jar
 
-#gnu-classpath classes
+# gnu-classpath classes
 install -d $RPM_BUILD_ROOT%{_jvmdir}/lib
 ln -sf %{_javadir}/tools.jar $RPM_BUILD_ROOT%{_jvmdir}/lib/tools.jar
 
