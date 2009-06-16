@@ -1,0 +1,3 @@
+- JDK should provide $JAVA_HOME/lib/tools.jar, so create such symlink
+- R: java-gnu-classpath (/usr/share/java/tools.jar)
+- rel 6
