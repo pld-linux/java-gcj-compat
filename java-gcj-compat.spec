@@ -20,6 +20,7 @@ URL:		http://sources.redhat.com/rhug/java-gcj-compat.html
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	python-devel
 BuildRequires:	rpmbuild(macros) >= 1.453
+BuildRequires:	which
 Requires:	java-gnu-classpath
 Requires:	libgcj >= %{gcc_ver}
 Provides:	java
