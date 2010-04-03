@@ -9,8 +9,8 @@
 Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
-Version:	1.0.78
-Release:	9
+Version:	1.0.80
+Release:	1
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
