@@ -25,6 +25,7 @@ Requires:	java-gnu-classpath
 Requires:	libgcj >= %{gcc_ver}
 Provides:	java
 Provides:	jce = 1.5
+Provides:	jdbc-stdext
 Provides:	jre = 1.5
 Obsoletes:	java-sun-jre
 Obsoletes:	java-sun-jre-jdbc
