@@ -19,6 +19,8 @@ Patch0:		%{name}-javac.patch
 URL:		http://sources.redhat.com/rhug/java-gcj-compat.html
 BuildRequires:	gcc-java >= %{gcc_ver}
 BuildRequires:	python-devel
+BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.453
 BuildRequires:	which
 Requires:	java-gnu-classpath
