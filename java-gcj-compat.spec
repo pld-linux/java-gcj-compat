@@ -10,7 +10,7 @@ Summary:	Shell scripts and symbolic links to simulate a Java runtime environment
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
 Name:		java-gcj-compat
 Version:	1.0.80
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Development/Languages/Java
 Source0:	ftp://sources.redhat.com/pub/rhug/%{name}-%{version}.tar.gz
@@ -23,8 +23,7 @@ BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.453
 BuildRequires:	which
-Requires:	java-gnu-classpath
-Requires:	libgcj >= %{gcc_ver}
+Requires:	%{name}-base = %{version}-%{release}
 Provides:	java
 Provides:	jce = 1.5
 Provides:	jdbc-stdext
@@ -49,14 +48,33 @@ Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
 mający na celu dostarczenie podobnego do JRE interfejsu do zestawu
 narzędzi GCJ.
 
+%package base
+Summary:	Shell scripts and symbolic links to simulate a Java runtime environment with GCJ
+Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruchomieniowego Javy przy użyciu GCJ
+Group:		Development/Languages/Java
+Requires:	java-gnu-classpath
+Requires:	libgcj >= %{gcc_ver}
+
+%description base
+A collection of wrapper scripts, symlinks and jar files. It is meant
+to provide an JRE-like interface to the GCJ tool set.
+
+This package provides JAVA_HOME=%{_jvmdir} which can be installed
+along other JRE implementation.
+
+%description base -l pl.UTF-8
+Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
+mający na celu dostarczenie podobnego do JRE interfejsu do zestawu
+narzędzi GCJ.
+
+Ten pakiet dostarcza JAVA_HOME=%{_jvmdir}, które może być zainstalowane
+obok innych implementacji JRE.
+
 %package devel
 Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
 Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
 Group:		Development/Languages/Java
-Requires:	%{name} = %{version}-%{release}
-Requires:	gcc-java >= %{gcc_ver}
-Requires:	gjdoc
-Requires:	libgcj-devel >= %{gcc_ver}
+Requires:	%{name}-devel-base = %{version}-%{release}
 Provides:	jar
 Provides:	java-jre-tools
 Provides:	jdk = 1.5
@@ -75,6 +93,30 @@ to provide an JDK-like interface to the GCJ tool set.
 Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
 mający na celu dostarczenie podobnego do JDK interfejsu do zestawu
 narzędzi GCJ.
+
+%package devel-base
+Summary:	Shell scripts and symbolic links to simulate Java development environment with GCJ
+Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska programistycznego Javy przy użyciu GCJ
+Group:		Development/Languages/Java
+Requires:	%{name}-base = %{version}-%{release}
+Requires:	gcc-java >= %{gcc_ver}
+Requires:	gjdoc
+Requires:	libgcj-devel >= %{gcc_ver}
+
+%description devel-base
+A collection of wrapper scripts, symlinks and jar files. It is meant
+to provide an JDK-like interface to the GCJ tool set.
+
+This package provides JAVA_HOME=%{_jvmdir} which can be installed
+along other JRE implementation.
+
+%description devel-base -l pl.UTF-8
+Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
+mający na celu dostarczenie podobnego do JDK interfejsu do zestawu
+narzędzi GCJ.
+
+Ten pakiet dostarcza JAVA_HOME=%{_jvmdir}, które może być zainstalowane
+obok innych implementacji JRE.
 
 %package -n python-java-gcj-compat
 Summary:	Python modules for java-gcj-compat
@@ -136,18 +178,24 @@ ln -sf %{_gccinc}/jvmpi.h	$RPM_BUILD_ROOT%{_jvmdir}/include/jvmpi.h
 install -d $RPM_BUILD_ROOT%{_jvmdir}/lib
 ln -sf %{_javadir}/tools.jar $RPM_BUILD_ROOT%{_jvmdir}/lib/tools.jar
 
+%py_postclean
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%dir %{_jvmdir}
-%dir %{_jvmdir}/bin
-%dir %{_jvmdir}/lib
 %attr(755,root,root) %{_bindir}/java
 %attr(755,root,root) %{_bindir}/keytool
 %attr(755,root,root) %{_bindir}/rmiregistry
+
+%files base
+%defattr(644,root,root,755)
+%doc AUTHORS ChangeLog README
+%dir %{_jvmdir}
+%dir %{_jvmdir}/bin
+%dir %{_jvmdir}/lib
 %attr(755,root,root) %{_jvmdir}/bin/java
 %attr(755,root,root) %{_jvmdir}/bin/keytool
 %attr(755,root,root) %{_jvmdir}/bin/rmiregistry
@@ -170,6 +218,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/javadoc
 %attr(755,root,root) %{_bindir}/javah
 %attr(755,root,root) %{_bindir}/rmic
+
+%files devel-base
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_jvmdir}/bin/appletviewer
 %attr(755,root,root) %{_jvmdir}/bin/jar
 %attr(755,root,root) %{_jvmdir}/bin/jarsigner
@@ -186,3 +237,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python-java-gcj-compat
 %defattr(644,root,root,755)
 %{py_sitescriptdir}/*.py[co]
+%{py_sitescriptdir}/*.egg-info
