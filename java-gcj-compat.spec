@@ -35,8 +35,9 @@ Conflicts:	java-sun
 Conflicts:	java-sun-jre-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_jvmroot	%{_libdir}/java
-%define		_jvmdir		%{_jvmroot}/java-1.5.0-gcj-1.5.0.0
+%define		dstreldir	java-1.5.0-gcj-1.5.0.0
+%define		dstdir		%{_jvmdir}/%{dstreldir}
+%define		jvmjardir	%{_jvmjardir}/%{name}-%{version}
 %define		_gccinc		%{_libdir}/gcc/%{_target_platform}/%{cc_version}/include
 
 %description
@@ -54,12 +55,13 @@ Summary(pl.UTF-8):	Skrypty powłoki i dowiązania do symulacji środowiska uruch
 Group:		Development/Languages/Java
 Requires:	java-gnu-classpath
 Requires:	libgcj >= %{gcc_ver}
+Provides:	jre(%{name})
 
 %description base
 A collection of wrapper scripts, symlinks and jar files. It is meant
 to provide an JRE-like interface to the GCJ tool set.
 
-This package provides JAVA_HOME=%{_jvmdir} which can be installed
+This package provides JAVA_HOME=%{dstdir} which can be installed
 along other JRE implementation.
 
 %description base -l pl.UTF-8
@@ -67,7 +69,7 @@ Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
 mający na celu dostarczenie podobnego do JRE interfejsu do zestawu
 narzędzi GCJ.
 
-Ten pakiet dostarcza JAVA_HOME=%{_jvmdir}, które może być zainstalowane
+Ten pakiet dostarcza JAVA_HOME=%{dstdir}, które może być zainstalowane
 obok innych implementacji JRE.
 
 %package devel
@@ -102,12 +104,13 @@ Requires:	%{name}-base = %{version}-%{release}
 Requires:	gcc-java >= %{gcc_ver}
 Requires:	gjdoc
 Requires:	libgcj-devel >= %{gcc_ver}
+Provides:	jdk(%{name})
 
 %description devel-base
 A collection of wrapper scripts, symlinks and jar files. It is meant
 to provide an JDK-like interface to the GCJ tool set.
 
-This package provides JAVA_HOME=%{_jvmdir} which can be installed
+This package provides JAVA_HOME=%{dstdir} which can be installed
 along other JRE implementation.
 
 %description devel-base -l pl.UTF-8
@@ -115,7 +118,7 @@ Zestaw skryptów obudowujących, dowiązań symbolicznych i plików jar,
 mający na celu dostarczenie podobnego do JDK interfejsu do zestawu
 narzędzi GCJ.
 
-Ten pakiet dostarcza JAVA_HOME=%{_jvmdir}, które może być zainstalowane
+Ten pakiet dostarcza JAVA_HOME=%{dstdir}, które może być zainstalowane
 obok innych implementacji JRE.
 
 %package -n python-java-gcj-compat
@@ -143,40 +146,44 @@ Moduły języka Python dla java-gcj-compat.
 %configure \
 	--with-arch-directory=%{_target_base_arch} \
 	--with-os-directory=linux \
-	--with-jvm-root-dir=%{_jvmroot} \
-	--with-classpath-security=%{_jvmdir}/lib/security/classpath.security \
+	--with-jvm-root-dir=%{_jvmdir} \
+	--with-classpath-security=%{dstdir}/lib/security/classpath.security \
 	--with-security-directory=%{_sysconfdir}/java/security/security.d
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javadir}
+install -d $RPM_BUILD_ROOT%{jvmjardir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cat <<'EOF' >$RPM_BUILD_ROOT%{_jvmdir}/bin/javac
+ln -s %{dstreldir} $RPM_BUILD_ROOT%{_jvmdir}/%{name}-%{version}
+ln -s %{dstreldir} $RPM_BUILD_ROOT%{_jvmdir}/%{name}
+ln -s %{dstreldir}/jre $RPM_BUILD_ROOT%{_jvmdir}/%{name}-jre
+
+cat <<'EOF' >$RPM_BUILD_ROOT%{dstdir}/bin/javac
 #!/bin/sh
 exec %{_bindir}/gij -jar %{_javadir}/ecj.jar ${1:+"$@"}
 EOF
 
 for f in jaas jdbc-stdext jce jndi jndi-cos jndi-ldap jndi-ldap jndi-rmi jta rt; do
-	ln -sf %{_javadir}/libgcj.jar $RPM_BUILD_ROOT%{_jvmdir}/jre/lib/$f.jar
-	cp -d $RPM_BUILD_ROOT{%{_jvmdir}/jre/lib/$f.jar,%{_javadir}}
+	ln -sf %{_javadir}/libgcj.jar $RPM_BUILD_ROOT%{dstdir}/jre/lib/$f.jar
+	cp -d $RPM_BUILD_ROOT{%{dstdir}/jre/lib/$f.jar,%{jvmjardir}}
 done
 
-ln -sf %{_gccinc}/jawt_md.h	$RPM_BUILD_ROOT%{_jvmdir}/include/linux/jawt_md.h
-ln -sf %{_gccinc}/jawt.h	$RPM_BUILD_ROOT%{_jvmdir}/include/jawt.h
-ln -sf %{_gccinc}/jni.h		$RPM_BUILD_ROOT%{_jvmdir}/include/jni.h
-ln -sf %{_gccinc}/jvmpi.h	$RPM_BUILD_ROOT%{_jvmdir}/include/jvmpi.h
+ln -sf %{_gccinc}/jawt_md.h	$RPM_BUILD_ROOT%{dstdir}/include/linux/jawt_md.h
+ln -sf %{_gccinc}/jawt.h	$RPM_BUILD_ROOT%{dstdir}/include/jawt.h
+ln -sf %{_gccinc}/jni.h		$RPM_BUILD_ROOT%{dstdir}/include/jni.h
+ln -sf %{_gccinc}/jvmpi.h	$RPM_BUILD_ROOT%{dstdir}/include/jvmpi.h
 
 #gnucrypto: jce.jar
 #jessie: {jcert,jnet,jsse}.jar -> jre/lib/jsse.jar
 
 # gnu-classpath classes
-install -d $RPM_BUILD_ROOT%{_jvmdir}/lib
-ln -sf %{_javadir}/tools.jar $RPM_BUILD_ROOT%{_jvmdir}/lib/tools.jar
+install -d $RPM_BUILD_ROOT%{dstdir}/lib
+ln -sf %{_javadir}/tools.jar $RPM_BUILD_ROOT%{dstdir}/lib/tools.jar
 
 %py_postclean
 
@@ -193,21 +200,22 @@ rm -rf $RPM_BUILD_ROOT
 %files base
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%dir %{_jvmdir}
-%dir %{_jvmdir}/bin
-%dir %{_jvmdir}/lib
-%attr(755,root,root) %{_jvmdir}/bin/java
-%attr(755,root,root) %{_jvmdir}/bin/keytool
-%attr(755,root,root) %{_jvmdir}/bin/rmiregistry
-%dir %{_jvmdir}/jre
-%dir %{_jvmdir}/jre/bin
-%attr(755,root,root) %{_jvmdir}/jre/bin/java
-%attr(755,root,root) %{_jvmdir}/jre/bin/keytool
-%attr(755,root,root) %{_jvmdir}/jre/bin/rmiregistry
-%dir %{_jvmdir}/jre/lib
-%dir %{_jvmdir}/jre/lib/%{_target_base_arch}
-%{_jvmdir}/jre/lib/*.jar
-%{_javadir}/*.jar
+%dir %{dstdir}
+%dir %{dstdir}/bin
+%dir %{dstdir}/lib
+%attr(755,root,root) %{dstdir}/bin/java
+%attr(755,root,root) %{dstdir}/bin/keytool
+%attr(755,root,root) %{dstdir}/bin/rmiregistry
+%dir %{dstdir}/jre
+%dir %{dstdir}/jre/bin
+%attr(755,root,root) %{dstdir}/jre/bin/java
+%attr(755,root,root) %{dstdir}/jre/bin/keytool
+%attr(755,root,root) %{dstdir}/jre/bin/rmiregistry
+%dir %{dstdir}/jre/lib
+%dir %{dstdir}/jre/lib/%{_target_base_arch}
+%{dstdir}/jre/lib/*.jar
+%{jvmjardir}/*.jar
+%{_jvmdir}/%{name}-jre
 
 %files devel
 %defattr(644,root,root,755)
@@ -221,18 +229,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel-base
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_jvmdir}/bin/appletviewer
-%attr(755,root,root) %{_jvmdir}/bin/jar
-%attr(755,root,root) %{_jvmdir}/bin/jarsigner
-%attr(755,root,root) %{_jvmdir}/bin/javac
-%attr(755,root,root) %{_jvmdir}/bin/javadoc
-%attr(755,root,root) %{_jvmdir}/bin/javah
-%attr(755,root,root) %{_jvmdir}/bin/rmic
-%attr(755,root,root) %{_jvmdir}/lib/tools.jar
-%dir %{_jvmdir}/include
-%{_jvmdir}/include/*.h
-%dir %{_jvmdir}/include/linux
-%{_jvmdir}/include/linux/*.h
+%attr(755,root,root) %{dstdir}/bin/appletviewer
+%attr(755,root,root) %{dstdir}/bin/jar
+%attr(755,root,root) %{dstdir}/bin/jarsigner
+%attr(755,root,root) %{dstdir}/bin/javac
+%attr(755,root,root) %{dstdir}/bin/javadoc
+%attr(755,root,root) %{dstdir}/bin/javah
+%attr(755,root,root) %{dstdir}/bin/rmic
+%attr(755,root,root) %{dstdir}/lib/tools.jar
+%dir %{dstdir}/include
+%{dstdir}/include/*.h
+%dir %{dstdir}/include/linux
+%{dstdir}/include/linux/*.h
+%{_jvmdir}/%{name}-%{version}
+%{_jvmdir}/%{name}
 
 %files -n python-java-gcj-compat
 %defattr(644,root,root,755)
