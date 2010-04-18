@@ -214,6 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{dstdir}/jre/lib
 %dir %{dstdir}/jre/lib/%{_target_base_arch}
 %{dstdir}/jre/lib/*.jar
+%dir %{jvmjardir}
 %{jvmjardir}/*.jar
 %{_jvmdir}/%{name}-jre
 
