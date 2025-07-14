@@ -136,7 +136,7 @@ Moduły języka Python dla java-gcj-compat.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 %{__sed} -i 's/sinjdoc/gjdoc/g' Makefile.*
 %{__sed} -i 's/fastjar/gjar/g' Makefile.*
 %{__sed} -i 's/ecj/gcj/g' Makefile.*
